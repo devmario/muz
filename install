@@ -1,0 +1,5 @@
+#!/bin/bash
+
+brew install id3lib ffmpeg jsawk node lame
+npm install
+pip install mutagen

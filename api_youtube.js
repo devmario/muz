@@ -1,6 +1,8 @@
 var jsonfile = require('jsonfile');
 var fetch = require('node-fetch');
 var child_process = require('child_process');
+var fs = require('fs');
+var request = require('request');
 
 var cmd_i = 2;
 var command = process.argv[cmd_i++];
@@ -20,9 +22,15 @@ var makeQuery = function (action, value) {
     };
     var key = 'AIzaSyC6CV00n729u45jksaXWLilBn6ZB1c74xA';
     var query = url[action] + `&key=${key}&maxResults=${maxResults}`;
-    console.log(query);
+    // console.log(query);
     return query;
 }
+
+var download = function(uri, filename, callback){
+    request.head(uri, function(err, res, body){
+        request(uri).pipe(fs.createWriteStream(filename)).on('close', callback);
+    });
+};
 
 fetch(makeQuery(command, {q:q, type:'video'}))
     .then(function(response) {
@@ -41,12 +49,20 @@ fetch(makeQuery(command, {q:q, type:'video'}))
             const videoId = item.id.videoId;
             const title = item.snippet.title;
 
+            const cover = `tmp/jpg/${videoId}.jpg`;
+            const url = item.snippet.thumbnails.high.url;
+            fs.exists(cover, function(exists) {
+                if(!exists) {
+                    download(url, cover, function(err){
+                    });
+                }
+            });
+
             jsonfile.writeFile(`tmp/json/${("0" + num).slice(-2)} ${videoId}.json`, item, function (err) {
                 if(err) {
                     console.log(err);
                     return process.exit(1);
                 }
-                console.log(`${title}(${videoId})`);
             });
 
             num++;
