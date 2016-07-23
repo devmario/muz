@@ -1,0 +1,40 @@
+#!/bin/bash
+
+count=$1
+duration=$2
+search=${@:3}
+
+brew install id3lib ffmpeg jsawk
+
+F=`tput setab 2 && tput setaf 7 && tput bold && tput rmul`
+FI=`tput setab 3 && tput setaf 0 && tput bold && tput smul`
+FE=`tput setab 5 && tput setaf 7 && tput bold && tput rmul`
+FU=`tput sgr0`
+
+rm -rf tmp/json
+
+mkdir -p tmp/json tmp/mp4 tmp/mp3
+echo "${F}유튜브에서 ${FI}'${search}'${F} 검색중...${FU}"
+node api_youtube.js search $duration $count $search
+
+for json in tmp/json/*.json; do
+    title=$(cat "$json" | jsawk 'return this.snippet.title')
+    name=$(basename "$json" ".json")
+    IFS=" "
+    set -f
+    split=($name)
+    videoId="${split[1]}"
+    if [ ! -f tmp/mp3/$videoId.mp3 ]; then
+        echo "${F}비디오 ${FI}'${title}'${F} 다운로드...${FI}tmp/mp4/${videoId}.mp4${FU}"
+        node dmuz_youtube.js $videoId
+        echo "${F}비디오 ${FI}'${title}'${F}를 mp3로 변환...${FI}tmp/mp4/${videoId}.mp4 => tmp/mp3/${videoId}.mp3${FU}"
+        ffmpeg -i tmp/mp4/$videoId.mp4 tmp/mp3/$videoId.mp3
+        echo "${F}mp3 ${FI}'${title}'${F} 에 노래제목 삽입...${FU}tmp/mp3/${videoId}.mp3${FU}"
+        node mp3_info.js $videoId $json
+        echo "${F}완료 ${FI}'${title}'${F} => ${FI}tmp/mp3/${videoId}.mp3${FU}"
+    else
+        echo "${F}이미 다운받음 ${FI}'${title}'${F} from ${FI}tmp/mp3/${videoId}.mp3${FU}"
+    fi
+done
+
+echo "${F}완료${FU}"
