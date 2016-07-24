@@ -30,6 +30,9 @@
 ./search_itunes.js "beatles" true
 ```
 
+### itunes-remote
+* [itunes-remote](https://github.com/mischah/itunes-remote)
+
 ### 다운로드된 리소스들
 * mp3 : 오디오
 
