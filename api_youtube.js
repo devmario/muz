@@ -51,6 +51,7 @@ fetch(makeQuery(command, {q:q, type:'video'}))
 
             const cover = `tmp/jpg/${videoId}.jpg`;
             const url = item.snippet.thumbnails.high.url;
+
             fs.exists(cover, function(exists) {
                 if(!exists) {
                     download(url, cover, function(err){
