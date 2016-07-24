@@ -1,3 +1,6 @@
+# [Youtube 링크로 작동 영상보기](https://www.youtube.com/watch?v=I5kK-EbbMz)
+[![Youtube](https://i.ytimg.com/vi/I5kK-EbbMzk/hqdefault.jpg)](https://www.youtube.com/watch?v=I5kK-EbbMzk)
+
 ### 요구사항
 * OSX
 * itunes
