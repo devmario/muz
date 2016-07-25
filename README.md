@@ -67,3 +67,7 @@ find tmp/ag -name '*' -type f
 * 불륨 컨트롤
 * itunes 비쥬얼 이퀄라이져
 * 커맨드 정리
+* Radio
+
+### reference
+* http://alvinalexander.com/apple/itunes-applescript-examples-scripts-mac-reference
