@@ -1,0 +1,8 @@
+#!/bin/bash
+
+_P=`pwd`
+cd $(dirname $0)
+
+./smuz regex ${@:2}
+
+cd $_P

@@ -51,7 +51,7 @@ fetch(makeQuery(command, {q:q, type:'video'}))
             const title = item.snippet.title;
             console.log(num + " : " + title);
 
-            const cover = `tmp/jpg/${videoId}.jpg`;
+            const cover = `${__dirname}/tmp/jpg/${videoId}.jpg`;
             const url = item.snippet.thumbnails.high.url;
             fs.exists(cover, function(exists) {
                 if(!exists) {
@@ -60,7 +60,7 @@ fetch(makeQuery(command, {q:q, type:'video'}))
                 }
             });
 
-            jsonfile.writeFile(`tmp/json/${("0" + num).slice(-2)} ${videoId}.json`, item, function (err) {
+            jsonfile.writeFile(`${__dirname}/tmp/json/${("0" + num).slice(-2)} ${videoId}.json`, item, function (err) {
                 if(err) {
                     console.log(err);
                     return process.exit(1);
