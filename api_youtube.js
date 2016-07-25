@@ -49,7 +49,7 @@ fetch(makeQuery(command, {q:q, type:'video'}))
             }
             const videoId = item.id.videoId;
             const title = item.snippet.title;
-            console.log(num + " : " + title, "\n");
+            console.log(num + " : " + title);
 
             const cover = `${__dirname}/tmp/jpg/${videoId}.jpg`;
             const url = item.snippet.thumbnails.high.url;
