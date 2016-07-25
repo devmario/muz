@@ -61,7 +61,11 @@ for json in ../tmp/json/*.json; do
         info="${FE}${title}${FU}"
     fi
     echo $info" ${_R}"
-    if [[ $DMUZ_JUST == 1 ]]; then osascript ../play_itune.scpt "${_R}" >> /dev/null; fi
+    if [[ $DMUZ_JUST == 1 ]]; then
+        osascript ../play_itune.scpt "${_R}" >> /dev/null;
+    else
+        osascript ../add_itune.scpt "${_R}" >> /dev/null;
+    fi
     ((num++))
 done
 if [[ $DMUZ_JUST == 1 ]]; then osascript ../play_list.scpt "${_R}" >> /dev/null; fi
