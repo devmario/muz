@@ -3,44 +3,25 @@
 var fuzzy = require('fuzzy');
 var parser = require('xml2json');
 var fs = require('fs');
+var plist = require('plist');
 
 var xml = fs.readFileSync(process.env['HOME']+'/Music/iTunes/iTunes\ Music\ Library.xml', 'utf8');
-var json = parser.toJson(xml, {object:true});
-json = json.plist.dict.dict.dict;
+var lib = plist.parse(xml);
 var list = [];
 var ti = [];
 
-for(var i in json) {
-    var it = json[i];
-    var obj = {};
-    var el = [];
-    el[0] = it.integer;
-    el[1] = it.date;
-    el[2] = it.string;
-    var n = 0;
-    var m = 0;
+for(var i in lib.Tracks) {
+    var it = lib.Tracks[i];
 
-    for(var k of it.key) {
-        obj[k] = el[n][m];
-        m++;
-        if(el[n][m] == undefined) {
-            n++;
-            m=0;
-        }
-        if(el[n] == undefined) {
-            break;
-        }
-    }
-
-    if(obj["Kind"] != "MPEG audio file" && obj["Kind"] != "Internet audio stream") {
+    if(it["Kind"] != "MPEG audio file" && it["Kind"] != "Internet audio stream") {
         continue;
     }
 
-    var id = obj['Track ID'];
-    var song = obj["Name"];
-    var artist = obj["Artist"];
-    var album = obj["Album"];
-    var gene = obj["Genre"];
+    var id = it['Track ID'];
+    var song = it["Name"];
+    var artist = it["Artist"];
+    var album = it["Album"];
+    var gene = it["Genre"];
     var F = id + "| " + song + " : " + artist + " : " + album + " : " + gene;
 
     list.push(F);
