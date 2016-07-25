@@ -21,9 +21,7 @@ rm -rf ../tmp/json
 mkdir -p ../tmp/json ../tmp/mp3 ../tmp/ag ../tmp/jpg ../tmp/webm
 echo "${F}유튜브에서 ${FI}'${search}'${F} 검색중...${FU}"
 search_result=$(node ../api_youtube.js search $duration $count $search)
-for line in $search_result; do
-    echo $line
-done
+echo "${search_result}"
 
 info=
 
