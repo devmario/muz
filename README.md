@@ -2,45 +2,66 @@
 [![Youtube](https://i.ytimg.com/vi/I5kK-EbbMzk/hqdefault.jpg)](https://www.youtube.com/watch?v=I5kK-EbbMzk)
 
 ### 요구사항
+
 * OSX
 * itunes
 
 ### 설치
+
 * 설치 커맨드
+
 ```bash
 ./install
 ```
 
+* 그이후 api_youtube.js 파일을 열어 key변수를 각자 개인의 Youtube API 키로 변경
+
 ### dmuz
-* 유튜브에서 'stevie wonder mv'로 검색하면 나오는 짧은동영상(기본값) 3(기본값)개를 다운로드 받고 mp3로 변환하여 아이튠즈에 추가해주며 첫곡은 변환되자 마자 플레이해준다.
+
+* 유튜브에서 'stevie wonder mv'로 검색하면 나오는 모든동영상(기본값)중 관련성 높은  3개를 다운로드 받고 mp3로 변환하여 아이튠즈에 추가해주며 플레이해준다.
 
 ```bash
-./dmuz stevie wonder mv
+./dmuz 3 stevie wonder mv
 ```
 
 ### dmuz_detail
-* 유튜브에서 'beatles mv'로 검색하면 나오는 짧은동영상 2개를 다운로드 받고 mp3로 변환하여 아이튠즈에 추가해주며 첫곡은 변환되자 마자 플레이해준다.
+
+* 유튜브에서 'beatles mv'로 검색하면 나오는 짧은동영상 2개를 다운로드 받고 mp3로 변환하여 아이튠즈에 추가해주며 플레이해준다.
+
 ```bash 
 ./dmuz_detail short 2 beatles mv
 ```
 
 ### search_itunes
-* itunes에서 'beatles'가 들어간 노래를 찾아서 재생목록으로 만들어 주고 플레이 한다.
-```
-./search_itunes.js "beatles" true
-```
 
-### itunes-remote
-* [itunes-remote](https://github.com/mischah/itunes-remote)
+* itunes에서 검색해서 플레이리스트 만들어주고 플레이한다
+
+```
+# 두번째 옵션은 어떤 방식으로 검색할껀지 결정
+./smuz [or|and|fuzzy] pattern_word_1 pattern_word_2
+```
 
 ### 다운로드된 리소스들
-* mp3 : 오디오
 
-```bash
-find tmp -name '*.mp4' -type f
-```
-* mp4 : 비디오
+* 오디오
 
 ```bash
 find tmp -name '*.mp3' -type f
 ```
+
+* 비디오
+
+```bash
+find tmp/webm -name '*' -type f
+```
+
+* youtube data
+```bash
+find tmp/ag -name '*' -type f
+```
+
+### TODO
+* 아이튠에서 삭제하기(완전히 삭제)
+* np_itunes: 플레이 리스트에서 몇번째인지도 나와야함
+* itunes 비쥬얼 이퀄라이져
+* 커맨드 정리

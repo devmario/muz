@@ -1,0 +1,33 @@
+#!/bin/bash
+
+_P=`pwd`
+cd $(dirname $0)
+
+osascript launch.scpt
+
+osascript clear_list.scpt >> /dev/null
+ID=$(./search_itunes.js $1 ${@:2})
+num=0
+for word in $ID
+do
+    ((num++))
+done
+FE=`tput setab 5 && tput setaf 7 && tput bold && tput rmul`
+FL=`tput setab 1 && tput setaf 7 && tput bold && tput smul && tput blink`
+FU=`tput sgr0`
+echo $FE Found $num songs. $FU
+if [[ $num == 0 ]]
+then
+    exit 0
+fi
+osascript play_id.scpt $ID >> /dev/null
+osascript play_list.scpt >> /dev/null
+
+info=$(cat .search_titles)
+echo "${FE}${info}${FU}"
+rm .search_titles
+
+CUR=$(./np_itunes.sh)
+echo "dmuz list : ${FL} ${CUR} ${FU}"
+
+cd $_P

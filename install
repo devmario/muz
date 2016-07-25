@@ -1,5 +1,7 @@
 #!/bin/bash
 
-brew install id3lib ffmpeg jsawk node lame
+brew install id3lib ffmpeg jsawk node lame youtube-dl
+brew tap iveney/mocha
+brew install realpath
 npm install
 pip install mutagen

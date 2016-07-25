@@ -6,8 +6,8 @@ var request = require('request');
 
 var cmd_i = 2;
 var command = process.argv[cmd_i++];
-var maxResults = process.argv[cmd_i++];
 var videoDuration = process.argv[cmd_i++];
+var maxResults = process.argv[cmd_i++];
 var q = encodeURIComponent(process.argv[cmd_i++]);
 for(; cmd_i < process.argv.length;) {
     q += "+" + encodeURIComponent(process.argv[cmd_i++]);
@@ -32,26 +32,27 @@ var download = function(uri, filename, callback){
     });
 };
 
+var num = 1;
 fetch(makeQuery(command, {q:q, type:'video'}))
     .then(function(response) {
         return response.json();
     }).then(function(json) {
         if(json.items == undefined) {
+            console.log(json);
             return;
         }
-        console.log(`Found ${json.items.length} video.`);
 
-        var num = 0;
+        var num = 1;
         for(var item of json.items) {
             if(item.id == undefined || item.id.videoId == undefined) {
-                return;
+                continue;
             }
             const videoId = item.id.videoId;
             const title = item.snippet.title;
+            console.log(num + " : " + title);
 
             const cover = `tmp/jpg/${videoId}.jpg`;
             const url = item.snippet.thumbnails.high.url;
-
             fs.exists(cover, function(exists) {
                 if(!exists) {
                     download(url, cover, function(err){
@@ -68,4 +69,6 @@ fetch(makeQuery(command, {q:q, type:'video'}))
 
             num++;
         }
+        console.log(`Found ${num - 1} video.`);
+
     });

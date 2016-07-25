@@ -1,0 +1,3 @@
+#!/bin/bash
+
+./smuz or ${@:1}

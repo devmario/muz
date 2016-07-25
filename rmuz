@@ -1,0 +1,3 @@
+#!/bin/bash
+
+./smuz regex ${@:2}

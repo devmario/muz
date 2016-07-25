@@ -3,6 +3,6 @@
 _P=`pwd`
 cd $(dirname $0)
 
-./dmuz_detail short 3 ${@:1}
+./dmuz_detail any $1 ${@:2}
 
 cd $_P
