@@ -25,7 +25,9 @@ echo "${search_result}"
 
 info=
 
-osascript ../clear_list.scpt >> /dev/null
+if [[ $DMUZ_JUST == 1 ]]; then
+    osascript ../clear_list.scpt >> /dev/null
+fi
 num=1
 for json in ../tmp/json/*.json; do
     basic_title=$(cat "$json" | jsawk 'return this.snippet.title')
@@ -53,12 +55,16 @@ for json in ../tmp/json/*.json; do
     mv "$json" ../tmp/ag/${videoId}.json
     _R=$(realpath $_DIR/../tmp/mp3/${videoId}.mp3)
     _R=$(node ../path_for_scpt.js "${_R}")
-    info="${FE}${title}${FZ} 플레이...${FU}"
+    if [[ $DMUZ_JUST == 1 ]]; then
+        info="${FE}${title}${FZ} 플레이...${FU}"
+    else
+        info="${FE}${title}${FU}"
+    fi
     echo $info" ${_R}"
-    osascript ../play_itune.scpt "${_R}" >> /dev/null
+    if [[ $DMUZ_JUST == 1 ]]; then osascript ../play_itune.scpt "${_R}" >> /dev/null; fi
     ((num++))
 done
-osascript ../play_list.scpt >> /dev/null
+if [[ $DMUZ_JUST == 1 ]]; then osascript ../play_list.scpt "${_R}" >> /dev/null; fi
 
 echo "${F}완료${FU}"
 echo "${F}${search_result}${FU}"
