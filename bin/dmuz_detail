@@ -62,7 +62,7 @@ osascript ../play_list.scpt >> /dev/null
 
 echo "${F}완료${FU}"
 echo "${F}${search_result}${FU}"
-CUR=$(./np_itunes.sh)
+CUR=$(./np_itunes.sh name)
 echo "${FL} ${CUR} ${FU}"
 
 cd $_P

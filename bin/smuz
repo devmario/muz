@@ -27,7 +27,7 @@ info=$(cat .search_titles)
 echo "${FE}${info}${FU}"
 rm .search_titles
 
-CUR=$(./np_itunes.sh)
+CUR=$(./np_itunes.sh name)
 echo "dmuz list : ${FL} ${CUR} ${FU}"
 
 cd $_P
