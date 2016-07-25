@@ -32,7 +32,7 @@ for(var i in json) {
         }
     }
 
-    if(obj["Kind"] != "MPEG audio file") {
+    if(obj["Kind"] != "MPEG audio file" && obj["Kind"] != "Internet audio stream") {
         continue;
     }
 
